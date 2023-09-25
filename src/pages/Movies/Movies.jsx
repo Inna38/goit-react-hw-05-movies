@@ -3,42 +3,53 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import Header from 'components/Layout/Header/Header';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
-  const [movies, setMovies] = useState('');
-  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const movieId = searchParams.get('movieId') ?? '';
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=9c63cd3e2af40f4c55ff67799c62e3dd&query=${query}`
-      )
-      .then(data => {
-        setMovies(data.data.results);
-        console.log(data.data.results);
-      })
-      .catch(error => console.log(error));
-  }, [query]);
-
-    const handleChange = e => {
-    setQuery(e.target.value);
-  };
+    if (movieId) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=9c63cd3e2af40f4c55ff67799c62e3dd&query=${movieId}`
+        )
+        .then(data => {
+          setMovies(data.data.results);
+          
+          if (data.data.results.length === 0) {
+            setSearchParams({});
+            return alert('Not found');
+          }
+        })
+        .catch(error => console.log(error));
+    }
+  }, [movieId, setSearchParams]);
 
   const handlerQuery = e => {
-      e.preventDefault();
-      
-      
- };
- 
+    e.preventDefault();
+    const moviesIdValue = e.currentTarget.elements.searchParams.value;
+    if (!moviesIdValue) {
+      alert('Please, enter your details');
+      return setSearchParams({});
+    }
+    setSearchParams({ movieId: moviesIdValue });
+
+    const form = e.currentTarget;
+    form.reset();
+  };
+
   return (
     <>
       <Header />
       <form onSubmit={handlerQuery}>
         <input
           type="text"
-        //   value={query}
-          onChange={handleChange}
+          name="searchParams"
+          // value={moviesId}
         />
         <button type="submit">Search</button>
       </form>
@@ -46,7 +57,7 @@ const Movies = () => {
         movies.map(({ title, id }) => (
           <ul key={id}>
             <li>
-              <Link>{title}</Link>
+              <Link to={`${id}`}>{title}</Link>
             </li>
           </ul>
         ))}
