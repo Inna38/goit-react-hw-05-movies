@@ -1,0 +1,18 @@
+.container {
+  margin: auto;
+  border-bottom: 2px solid gray;
+  box-shadow: 2px 2px 3px #c7b4b4;
+  margin-bottom: 25px;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.nav {
+  text-decoration: none;
+  color: black;
+  font-size: 24px;
+}

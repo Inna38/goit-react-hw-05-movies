@@ -1,0 +1,17 @@
+.list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding-left: 2px;
+}
+
+.item {
+  border-bottom: 2px solid gray;
+  margin-bottom: 5px;
+}
+
+.nav {
+  text-decoration: none;
+  color: black;
+  font-size: 17px;
+}

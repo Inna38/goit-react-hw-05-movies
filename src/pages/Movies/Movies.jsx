@@ -1,9 +1,15 @@
 import axios from 'axios';
+import Notiflix from 'notiflix';
 
 import { useEffect, useState } from 'react';
 
 import Header from 'components/Layout/Header/Header';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+
+import { BASE_URL, API_KEY } from 'components/constants/api.constants';
+
+import css from './Movies.module.css';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -14,15 +20,14 @@ const Movies = () => {
   useEffect(() => {
     if (movieId) {
       axios
-        .get(
-          `https://api.themoviedb.org/3/search/movie?api_key=9c63cd3e2af40f4c55ff67799c62e3dd&query=${movieId}`
-        )
+        .get(`${BASE_URL}search/movie${API_KEY}&query=${movieId}`)
         .then(data => {
           setMovies(data.data.results);
-          
+
           if (data.data.results.length === 0) {
             setSearchParams({});
-            return alert('Not found');
+             Notiflix.Notify.failure('Not found');
+            // return alert('Not found');
           }
         })
         .catch(error => console.log(error));
@@ -33,7 +38,8 @@ const Movies = () => {
     e.preventDefault();
     const moviesIdValue = e.currentTarget.elements.searchParams.value;
     if (!moviesIdValue) {
-      alert('Please, enter your details');
+         Notiflix.Notify.failure('Please enter your request');
+      // alert('Please, enter your details');
       return setSearchParams({});
     }
     setSearchParams({ movieId: moviesIdValue });
@@ -45,22 +51,19 @@ const Movies = () => {
   return (
     <>
       <Header />
-      <form onSubmit={handlerQuery}>
+      <form onSubmit={handlerQuery} className={css.form}>
         <input
           type="text"
           name="searchParams"
           // value={moviesId}
+          className={css.input}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={css.btn}>
+          Search
+        </button>
       </form>
-      {movies &&
-        movies.map(({ title, id }) => (
-          <ul key={id}>
-            <li>
-              <Link to={`${id}`}>{title}</Link>
-            </li>
-          </ul>
-        ))}
+
+      <MoviesList movies={movies} />
     </>
   );
 };

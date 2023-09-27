@@ -1,0 +1,10 @@
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  font-size: 26px;
+}

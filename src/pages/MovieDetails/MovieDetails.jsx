@@ -1,60 +1,84 @@
 import axios from 'axios';
 
-import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import { Link, Outlet, useParams } from 'react-router-dom';
+import { Suspense } from 'react';
+
+import { BASE_URL, API_KEY } from 'components/constants/api.constants';
+
+import css from './MovieDetails.module.css';
+import Header from 'components/Layout/Header/Header';
 
 const MovieDetails = () => {
+  const [movies, setMovies] = useState('');
+  const { movieId } = useParams();
 
-    const [movies, setMovies] = useState("")
-    const [photo, setPhoto] = useState("")
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}movie/${movieId}${API_KEY}`)
+      .then(({ data }) => {
+        setMovies(data);
+      })
+      .catch(error => console.log(error));
+  }, [movieId]);
 
-    const {movieId} =  useParams()
-    
-  
-    
-    // useEffect(() => {
-    //     axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=9c63cd3e2af40f4c55ff67799c62e3dd`).then(({data}) => {
-    //         console.log(data);
-    //         setMovies(data)
-    //     }).catch(error => console.log(error))
-    // }, [movieId])
+  const { id, title, popularity, poster_path, overview, genres } = movies;
 
+  return (
+    <>
+      <Header />
+      {movies && (
+        <ul key={id} className={css.list}>
+          <li className={css.item}>
+            <div className={css.containerImg}>
+              {poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                  alt=""
+                  className={css.img}
+                />
+              ) : (
+                ''
+              )}
+            </div>
 
-    useEffect(() => {
-         const img = axios.get("https://api.themoviedb.org/3/movie/420818/images?api_key=9c63cd3e2af40f4c55ff67799c62e3dd").then(({data}) => {
-        console.log(data.logos)
-    }).catch(error => console.log(error))
-        
- console.log(img);
-        //         axios.get(` https://api.themoviedb.org/3/collection/268/images?api_key=9c63cd3e2af40f4c55ff67799c62e3dd`).then((data) => {
-        //     console.log(data);
-        //     // setPhoto(data)
-        // }).catch(error => console.log(error))
- 
-},[])
-    // return (
-    // <>  {movies &&
-    //         //  movies.map( movie => (
-    //           <ul key ={movies.id}>
-    //             <li>
-    //                 <h1>{movies.original_title}</h1>
-    //                 <p>User Score: {Math.round(movies.popularity)} %</p>
-    //                 <img src={`${movies.poster_path}`} alt="" />
-    //                 <h2>Overview </h2>
-    //                 <p> {movies.overview}</p>
-    //                  <h2>Genres </h2>
-    //                 {movies.genres.map(({ name }) => <p key={name}>{name}</p>)}
-    //                 <ul>Addition information:
-    //                     <li><Link>Cast</Link></li>
-    //                     <li><Link>Reviews</Link></li>
-    //                 </ul>
-    //             </li>
-    //         </ul>  
-    //         // ) )
-    //     }</>
-      
-      
-    // )
-}
+            <div className={css.container}>
+              <h1>{title}</h1>
+              <p>User Score: {Math.round(popularity)} %</p>
 
-export default MovieDetails
+              <h2>Overview </h2>
+              <p> {overview}</p>
+              <h2>Genres</h2>
+              {genres.map(({ name }) => (
+                <p key={name} className={css.description}>
+                  {name},{' '}
+                </p>
+              ))}
+            </div>
+          </li>
+        </ul>
+      )}
+
+      <ul>
+        <ul>
+          <h3>Addition information:</h3>
+          <li className={css.item}>
+            <Link to="cast" className={css.nav}>
+              Cast
+            </Link>
+          </li>
+          <li className={css.item}>
+            <Link to="reviews" className={css.nav}>
+              Reviews
+            </Link>
+          </li>
+        </ul>
+      </ul>
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
+    </>
+  );
+};
+
+export default MovieDetails;
