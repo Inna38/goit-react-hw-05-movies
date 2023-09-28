@@ -7,12 +7,24 @@ const Header = () => {
     <header className={css.container}>
       <ul className={css.list}>
         <li className={css.item}>
-          <NavLink to="/" className={css.nav}>
+          <NavLink
+            to="/"
+            className={css.nav}
+            style={({ isActive }) => ({
+              color: isActive ? '#e87272' : 'black',
+            })}
+          >
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/movies" className={css.nav}>
+          <NavLink
+            to="/movies"
+            className={css.nav}
+            style={({ isActive }) => ({
+              color: isActive ? '#e87272' : 'black',
+            })}
+          >
             Movies
           </NavLink>
         </li>

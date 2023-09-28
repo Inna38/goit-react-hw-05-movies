@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import css from './Cast.module.css';
+import {BASE_URL, API_KEY, IMG_BASE_URL } from 'components/constants/api.constants';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -12,7 +13,7 @@ const Cast = () => {
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/${movieId}}/credits?api_key=9c63cd3e2af40f4c55ff67799c62e3dd
+        `${BASE_URL}movie/${movieId}}/credits${API_KEY}
     `
       )
       .then(({ data }) => {
@@ -31,7 +32,7 @@ const Cast = () => {
                 <li className={css.item}>
                   {profile_path ? (
                     <img
-                      src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+                      src={`${IMG_BASE_URL}${profile_path}`}
                       alt=""
                       className={css.img}
                     />

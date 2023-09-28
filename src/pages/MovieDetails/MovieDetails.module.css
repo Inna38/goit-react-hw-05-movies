@@ -23,6 +23,8 @@
 .nav {
   font-size: 18px;
   margin-bottom: 8px;
+  color: black;
+  margin-left: 45px;
 }
 
 @media (max-width: 715px) {

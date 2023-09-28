@@ -27,7 +27,7 @@ const Movies = () => {
           if (data.data.results.length === 0) {
             setSearchParams({});
              Notiflix.Notify.failure('Not found');
-            // return alert('Not found');
+            
           }
         })
         .catch(error => console.log(error));
@@ -38,8 +38,8 @@ const Movies = () => {
     e.preventDefault();
     const moviesIdValue = e.currentTarget.elements.searchParams.value;
     if (!moviesIdValue) {
-         Notiflix.Notify.failure('Please enter your request');
-      // alert('Please, enter your details');
+      Notiflix.Notify.failure('Please enter your request')
+      
       return setSearchParams({});
     }
     setSearchParams({ movieId: moviesIdValue });

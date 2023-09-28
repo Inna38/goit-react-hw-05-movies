@@ -9,13 +9,6 @@ const Cast = lazy(() => import("pages/MovieDetails/ComponentsMovieDetails/Cast/C
 const Reviews = lazy(() => import("pages/MovieDetails/ComponentsMovieDetails/Reviews/Reviews"));
 const NotFound = lazy(() => import("pages/NotFound/NotFound"));
 
-// import Home from 'pages/Home/Home';
-// import Cast from 'pages/MovieDetails/ComponentsMovieDetails/Cast/Cast';
-// import Reviews from 'pages/MovieDetails/ComponentsMovieDetails/Reviews/Reviews';
-// import MovieDetails from 'pages/MovieDetails/MovieDetails';
-// import Movies from 'pages/Movies/Movies';
-// import NotFound from 'pages/NotFound/NotFound';
-
 
 export const App = () => {
   return (

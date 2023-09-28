@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { Suspense } from 'react';
 
-import { BASE_URL, API_KEY } from 'components/constants/api.constants';
+import { BASE_URL, API_KEY, IMG_BASE_URL } from 'components/constants/api.constants';
 
 import css from './MovieDetails.module.css';
 import Header from 'components/Layout/Header/Header';
@@ -12,6 +12,8 @@ import Header from 'components/Layout/Header/Header';
 const MovieDetails = () => {
   const [movies, setMovies] = useState('');
   const { movieId } = useParams();
+  const location = useLocation()
+    const locationRef = useRef(location.state?.from ?? "/")
 
   useEffect(() => {
     axios
@@ -27,13 +29,14 @@ const MovieDetails = () => {
   return (
     <>
       <Header />
+      <Link to={locationRef.current} className={css.nav}>BACK</Link>
       {movies && (
         <ul key={id} className={css.list}>
           <li className={css.item}>
             <div className={css.containerImg}>
               {poster_path ? (
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                  src={`${IMG_BASE_URL}${poster_path}`}
                   alt=""
                   className={css.img}
                 />
@@ -63,7 +66,7 @@ const MovieDetails = () => {
         <ul>
           <h3>Addition information:</h3>
           <li className={css.item}>
-            <Link to="cast" className={css.nav}>
+            <Link to="cast"  className={css.nav}>
               Cast
             </Link>
           </li>

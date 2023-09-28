@@ -1,16 +1,20 @@
-.list{
-    list-style: none;
-        margin-right: 65px;
+.list {
+  list-style: none;
+  margin-right: 65px;
 }
 
-.description{
-    line-height: 1.5;
+.description {
+  line-height: 1.5;
+}
+
+.title {
+  margin-left: 35px;
 }
 
 @media (max-width: 715px) {
   .list {
     padding-left: 0;
-        margin-left: 25px;
+    margin-left: 25px;
     margin-right: 25px;
   }
 }
