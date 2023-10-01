@@ -3,7 +3,6 @@ import Notiflix from 'notiflix';
 
 import { useEffect, useState } from 'react';
 
-import Header from 'components/Layout/Header/Header';
 import { useSearchParams } from 'react-router-dom';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 
@@ -50,7 +49,6 @@ const Movies = () => {
 
   return (
     <>
-      <Header />
       <form onSubmit={handlerQuery} className={css.form}>
         <input
           type="text"

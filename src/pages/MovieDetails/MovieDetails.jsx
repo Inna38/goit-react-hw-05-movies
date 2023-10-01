@@ -7,7 +7,6 @@ import { Suspense } from 'react';
 import { BASE_URL, API_KEY, IMG_BASE_URL } from 'components/constants/api.constants';
 
 import css from './MovieDetails.module.css';
-import Header from 'components/Layout/Header/Header';
 
 const MovieDetails = () => {
   const [movies, setMovies] = useState('');
@@ -28,7 +27,6 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Header />
       <Link to={locationRef.current} className={css.nav}>BACK</Link>
       {movies && (
         <ul key={id} className={css.list}>

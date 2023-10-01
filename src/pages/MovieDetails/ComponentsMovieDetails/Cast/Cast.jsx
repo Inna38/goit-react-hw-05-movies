@@ -25,7 +25,7 @@ const Cast = () => {
   return (
     <>
       <div className={css.container}>
-        {cast &&
+        {cast.length > 0 ?
           cast.map(({ cast_id, profile_path, name, character }) => {
             return (
               <ul key={cast_id} className={css.list}>
@@ -44,7 +44,9 @@ const Cast = () => {
                 </li>
               </ul>
             );
-          })}
+          })
+        : <h4 className={css.title}>We don`t have any reviews for this movie.</h4>
+        }
       </div>
     </>
   );

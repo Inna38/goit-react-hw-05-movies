@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { useEffect, useState } from 'react';
 
-import Header from 'components/Layout/Header/Header';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 
 import { BASE_URL, API_KEY } from 'components/constants/api.constants';
@@ -22,7 +21,6 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Header />
       <h1 className={css.title}>The most popular movies today:</h1>
       <MoviesList movies={movies} />
     </>
