@@ -45,7 +45,7 @@ const Cast = () => {
               </ul>
             );
           })
-        : <h4 className={css.title}>We don`t have any reviews for this movie.</h4>
+        : <h4 className={css.title}>We don`t have any cast for this movie.</h4>
         }
       </div>
     </>

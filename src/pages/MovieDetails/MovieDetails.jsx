@@ -4,15 +4,22 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { Suspense } from 'react';
 
-import { BASE_URL, API_KEY, IMG_BASE_URL } from 'components/constants/api.constants';
+import {
+  BASE_URL,
+  API_KEY,
+  IMG_BASE_URL,
+} from 'components/constants/api.constants';
 
 import css from './MovieDetails.module.css';
+
+const defaultImg =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEThhwugtc7c1PvjpjhDjoa5SN27EX4vGuBAScmFBCZGqwgdtnwGHU227Ap2sLqPslPQw&usqp=CAU';
 
 const MovieDetails = () => {
   const [movies, setMovies] = useState('');
   const { movieId } = useParams();
-  const location = useLocation()
-    const locationRef = useRef(location.state?.from ?? "/")
+  const location = useLocation();
+  const locationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     axios
@@ -27,7 +34,9 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Link to={locationRef.current} className={css.nav}>BACK</Link>
+      <Link to={locationRef.current} className={css.nav}>
+        BACK
+      </Link>
       {movies && (
         <ul key={id} className={css.list}>
           <li className={css.item}>
@@ -39,7 +48,7 @@ const MovieDetails = () => {
                   className={css.img}
                 />
               ) : (
-                ''
+                <img src={`${defaultImg}`} alt="" className={css.img} />
               )}
             </div>
 
@@ -47,14 +56,23 @@ const MovieDetails = () => {
               <h1>{title}</h1>
               <p>User Score: {Math.round(popularity)} %</p>
 
-              <h2>Overview </h2>
-              <p> {overview}</p>
-              <h2>Genres</h2>
-              {genres.map(({ name }) => (
-                <p key={name} className={css.description}>
-                  {name},{' '}
-                </p>
-              ))}
+              {overview && (
+                <>
+                  <h2>Overview </h2>
+                  <p> {overview}</p>
+                </>
+              )}
+
+              {genres.length > 0 && (
+                <>
+                  <h2>Genres</h2>
+                  {genres.map(({ name }) => (
+                    <p key={name} className={css.description}>
+                      {name},{' '}
+                    </p>
+                  ))}
+                </>
+              )}
             </div>
           </li>
         </ul>
@@ -64,7 +82,7 @@ const MovieDetails = () => {
         <ul>
           <h3>Addition information:</h3>
           <li className={css.item}>
-            <Link to="cast"  className={css.nav}>
+            <Link to="cast" className={css.nav}>
               Cast
             </Link>
           </li>
